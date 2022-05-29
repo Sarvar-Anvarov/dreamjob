@@ -1,12 +1,32 @@
-import pandas as pd
 import sqlalchemy
+from io import StringIO
 
+from dreamjob.db.preprocess_data import array_literal
 from pandas import DataFrame
 
 
-def insert(df: DataFrame):
+def insert(vacancies: DataFrame, engine: sqlalchemy.engine.base.Engine):
     """Insert new vacancies into table"""
-    ...
+    vacancies = (
+        vacancies
+        .assign(
+            key_skills=lambda df: df["key_skills"].apply(array_literal),
+            specializations=lambda df: df["specializations"].apply(array_literal),
+        )
+    )
+
+    raw_con = engine.raw_connection()
+
+    with raw_con.cursor() as cursor:
+        buffer = StringIO()
+
+        vacancies.to_csv(buffer, sep='\t', header=False, index=False)
+
+        buffer.seek(0)
+        cursor.copy_from(buffer, 'vacancies', null="")
+        raw_con.commit()
+
+    return vacancies.shape[0]
 
 
 def update(df: DataFrame):

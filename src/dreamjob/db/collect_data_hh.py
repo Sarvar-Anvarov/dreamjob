@@ -19,7 +19,7 @@ def get_page(params: dict) -> Tuple[DataFrame, int, int]:
         params: parameters for hh.ru data request
 
     Returns:
-        Dataframe with vacancy urls
+        Dataframe with vacancies urls
         Max number of pages allowed (<=20)
         Number of found vacancies
 
@@ -37,16 +37,16 @@ def get_pages(params: dict) -> DataFrame:
         params: parameters for hh.ru data request
 
     Returns:
-        Dataframe with vacancy urls
+        Dataframe with vacancies urls
 
     """
-    vacancy_urls = pd.DataFrame()
+    vacancies_urls = pd.DataFrame()
 
     for page in range(20):
         params["page"] = page
 
         page_info, max_pages, vacancies_found = get_page(params)
-        vacancy_urls = pd.concat([vacancy_urls, page_info])
+        vacancies_urls = pd.concat([vacancies_urls, page_info])
 
         if max_pages - page <= 1:
             break
@@ -56,13 +56,12 @@ def get_pages(params: dict) -> DataFrame:
                 vacancies_found=vacancies_found,
                 vacancies_allowed=min(2000, vacancies_found))
 
-    return vacancy_urls[["id", "url"]]
+    return vacancies_urls[["id", "url"]]
 
 
-def get_vacancies(area: int = 2,
-                  period: int = 1,
-                  per_page: int = 100
-                  ) -> DataFrame:
+def get_vacancies(area: int,
+                  period: int,
+                  per_page: int) -> DataFrame:
     """Get full vacancy descriptions
 
     Args:
@@ -80,20 +79,20 @@ def get_vacancies(area: int = 2,
         "per_page": per_page,
     }
 
-    vacancy_urls = get_pages(params)
-    vacancy_df = pd.DataFrame()
+    vacancies_urls = get_pages(params)
+    vacancies_df = pd.DataFrame()
 
-    for ind, url in enumerate(vacancy_urls["url"]):
+    for ind, url in enumerate(vacancies_urls["url"]):
         response = requests.get(url)
         json_file = json.loads(response.text)
 
-        vacancy_info = pd.json_normalize(json_file)
-        vacancy_df = pd.concat([vacancy_df, vacancy_info], ignore_index=True)
+        vacancies_info = pd.json_normalize(json_file)
+        vacancies_df = pd.concat([vacancies_df, vacancies_info], ignore_index=True)
 
         if ind % 100 == 0:
             logger.info(f"Loading vacancy #{ind}")
 
     logger.info("Vacancies are loaded",
-                vacancies_loaded=vacancy_df.shape[0])
+                vacancies_loaded=vacancies_df.shape[0])
 
-    return vacancy_df[DISPLAY_COLS]
+    return vacancies_df[DISPLAY_COLS]

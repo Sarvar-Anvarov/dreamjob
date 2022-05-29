@@ -40,7 +40,6 @@ COLS = [
     "address.lat",
     "address.lng",
     "address.raw",
-    "salary",
     "salary.currency",
     "salary.from",
     "salary.to",

@@ -5,10 +5,10 @@ from typing import List, Any
 from pandas import DataFrame
 
 
-def preprocess_data(vacancy_raw: DataFrame) -> DataFrame:
+def preprocess_data(vacancies_raw: DataFrame) -> DataFrame:
     """Preprocess raw vacancy data"""
-    vacancy_df = (
-        vacancy_raw
+    vacancies = (
+        vacancies_raw
         .assign(
             key_skills=lambda df: df["key_skills"].apply(
                 parse_multiple_values_cols
@@ -25,7 +25,7 @@ def preprocess_data(vacancy_raw: DataFrame) -> DataFrame:
         )
     )
 
-    return vacancy_df
+    return vacancies
 
 
 def parse_multiple_values_cols(col: List, first_only: bool = False) -> Any:
@@ -41,3 +41,15 @@ def remove_tags(text: str) -> str:
     tags = re.compile(r"<[^>]+>|&quot")
 
     return tags.sub("", text)
+
+
+def array_literal(col):
+    """Prepare columns with arrays for postgres format"""
+    return (
+        str(col)
+        .replace("[", "{")
+        .replace("]", "}")
+        .replace("\"", "")
+        .replace("\'", "")
+        .replace(",}", "}")
+    )
