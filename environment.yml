@@ -1,0 +1,12 @@
+name: dreamjob
+channels:
+  - defaults
+  - anaconda
+  - conda-forge
+dependencies:
+  - python=3.8
+  - jupyterlab=3
+  - seaborn
+  - pip=22.0.3
+  - pip:
+    - poetry
