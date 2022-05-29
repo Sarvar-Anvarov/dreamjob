@@ -52,4 +52,5 @@ def array_literal(col):
         .replace("\"", "")
         .replace("\'", "")
         .replace(",}", "}")
+        .replace(",,", ",")
     )
