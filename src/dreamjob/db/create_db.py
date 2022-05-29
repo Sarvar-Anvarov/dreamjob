@@ -10,7 +10,6 @@ PASSWORD = settings.PASSWORD
 DB_CONNECTION_STRING = f"postgresql+psycopg2://{USER}:{PASSWORD}@localhost"
 
 logger = get_logger()
-# TODO: Add logging and exceptions, dynanconf secrets
 
 
 def create_db():
@@ -18,16 +17,15 @@ def create_db():
         sql_engine = create_engine(DB_CONNECTION_STRING, isolation_level="AUTOCOMMIT")
         sql_engine.execute("CREATE DATABASE dreamjob")
 
-        logger.info("Database 'dreamjob' has been created")
-
-    except:
-        logger.info("Database 'dreamjob' is ready to use")
+    except Exception as e:
+        logger.info("Database 'dreamjob' already exists", msg=e.__class__.__name__)
 
 
 def create_table():
     db_engine = create_engine(DB_CONNECTION_STRING + "/dreamjob")
     metadata = MetaData()
 
+    # TODO: add actual table
     employees = Table('employees', metadata,
                       Column('employee_id', sqlalchemy.Integer, primary_key=True),
                       Column('employee_name', sqlalchemy.String(60), nullable=False, key='name')
