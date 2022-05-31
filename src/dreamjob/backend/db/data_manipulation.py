@@ -13,8 +13,6 @@ def insert(vacancies: DataFrame, engine: sqlalchemy.engine.base.Engine):
             **{
                 "key_skills": lambda df: df["key_skills"].apply(array_literal),
                 "specializations": lambda df: df["specializations"].apply(array_literal),
-                "salary.from": lambda df: df["salary.from"].astype(int),
-                "salary.to": lambda df: df["salary.to"].astype(int),
             }
         )
     )

@@ -68,8 +68,8 @@ def create_table():
         sqlalchemy.Column("address.lng", sqlalchemy.Float),
         sqlalchemy.Column("address.raw", sqlalchemy.String),
         sqlalchemy.Column("salary.currency", sqlalchemy.String),
-        sqlalchemy.Column("salary.from", sqlalchemy.Integer),
-        sqlalchemy.Column("salary.to", sqlalchemy.Integer),
+        sqlalchemy.Column("salary.from", sqlalchemy.Float),
+        sqlalchemy.Column("salary.to", sqlalchemy.Float),
         sqlalchemy.Column("salary.gross", sqlalchemy.Boolean),
     )
     vacancies.create(db_engine, checkfirst=True)
