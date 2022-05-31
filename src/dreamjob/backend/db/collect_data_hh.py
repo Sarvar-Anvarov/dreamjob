@@ -42,7 +42,7 @@ def get_pages(params: dict) -> DataFrame:
     """
     vacancies_urls = pd.DataFrame()
 
-    for page in range(2):
+    for page in range(1):
         params["page"] = page
 
         page_info, max_pages, vacancies_found = get_page(params)
@@ -52,16 +52,13 @@ def get_pages(params: dict) -> DataFrame:
             break
 
     logger.info("Pages are loaded",
-                max_pages=max_pages,
                 vacancies_found=vacancies_found,
                 vacancies_allowed=min(2000, vacancies_found))
 
     return vacancies_urls[["id", "url"]]
 
 
-def get_vacancies(area: int,
-                  period: int,
-                  per_page: int) -> DataFrame:
+def get_vacancies(area: int, period: int, per_page: int) -> DataFrame:
     """Get full vacancy descriptions
 
     Args:

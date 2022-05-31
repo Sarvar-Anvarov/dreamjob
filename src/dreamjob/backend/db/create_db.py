@@ -1,11 +1,11 @@
-import os
 import datetime
 import sqlalchemy
 import pandas as pd
 
 from sqlalchemy import create_engine, MetaData
-from dreamjob.backend.config import settings
 from structlog import get_logger
+from dreamjob.backend.config import settings
+from dreamjob.backend.db.db_engine import DBConfig
 
 USER = settings.USER
 PASSWORD = settings.PASSWORD
@@ -23,8 +23,8 @@ def create_db():
         logger.info("Database 'dreamjob' already exists", msg=e.__class__.__name__)
 
 
-def create_table():
-    db_engine = create_engine(os.path.join(DB_CONNECTION_STRING, "dreamjob"))
+def create_table(db_engine=None):
+    db_engine = db_engine if db_engine is not None else DBConfig.get().db_engine
     metadata = MetaData()
 
     vacancies = sqlalchemy.Table(

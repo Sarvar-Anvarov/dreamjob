@@ -31,15 +31,10 @@ def insert(vacancies: DataFrame, engine: sqlalchemy.engine.base.Engine):
 
 
 def update():
-    """Update old vacancies info"""
+    """Update old vacancies"""
     ...
 
 
-def prepare_actual_vacancies():
-    """Prepare actual vacancies for recommendations"""
-    ...
-
-
-def prepare_train_data():
-    """Prepare train data to fit model"""
+def select():
+    """Select vacancies"""
     ...

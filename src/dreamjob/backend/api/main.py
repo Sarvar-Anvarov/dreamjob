@@ -1,13 +1,12 @@
 import uvicorn
 from fastapi import HTTPException
+from fastapi import FastAPI
 
 from dreamjob.backend.db.api import add_new_vacancies
 from dreamjob.backend.db.create_db import create_db, create_table
 from dreamjob.backend.config.logging_setup import setup_logging
 from dreamjob.backend.config import settings
 
-from typing import Union
-from fastapi import FastAPI
 
 LOG_DIR = settings.LOG_DIR
 app = FastAPI()
@@ -25,11 +24,6 @@ def startup_events():
     create_table()
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
-
-
 @app.get("/add_new_vacancies")
 def add_new_vacancies_event(area: int = 2,
                             period: int = 1,
@@ -42,7 +36,7 @@ def add_new_vacancies_event(area: int = 2,
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-    return {"post status": "new vacancies were added"}
+    return {"status": "new vacancies were added"}
 
 
 def main():
