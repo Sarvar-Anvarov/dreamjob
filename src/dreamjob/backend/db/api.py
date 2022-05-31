@@ -18,8 +18,8 @@ def add_new_vacancies(area: int = 2,
                       period: int = 1,
                       per_page: int = 100,
                       db_engine=None) -> Dict[str, str]:
-    """Periodically upgrade table with new vacancies
-
+    """
+    Periodically upgrade table with new vacancies
     Period - each day in the morning
     TODO: Add celery task
     TODO: Call DB_CONNECTION_STRING once
@@ -30,9 +30,7 @@ def add_new_vacancies(area: int = 2,
 
         db_engine = db_engine if db_engine is not None else DBConfig.get().db_engine
 
-        vacancies_raw = get_vacancies(
-            area=area, period=period, per_page=per_page
-        )
+        vacancies_raw = get_vacancies(area=area, period=period, per_page=per_page)
         vacancies = preprocess_data(vacancies_raw)
         number_of_new_vacs = insert(vacancies, db_engine)
 
@@ -42,4 +40,4 @@ def add_new_vacancies(area: int = 2,
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-    return {"status": "new vacancies were added"}
+    return {"status": f"{number_of_new_vacs} new vacancies were added"}
