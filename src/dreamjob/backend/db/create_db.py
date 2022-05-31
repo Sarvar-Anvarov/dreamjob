@@ -4,7 +4,7 @@ import sqlalchemy
 import pandas as pd
 
 from sqlalchemy import create_engine, MetaData
-from dreamjob.config import settings
+from dreamjob.backend.config import settings
 from structlog import get_logger
 
 USER = settings.USER

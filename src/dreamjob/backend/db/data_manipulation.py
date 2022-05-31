@@ -1,7 +1,7 @@
 import sqlalchemy
 from io import StringIO
 
-from dreamjob.db.preprocess_data import array_literal
+from dreamjob.backend.db.preprocess_data import array_literal
 from pandas import DataFrame
 
 
@@ -10,8 +10,12 @@ def insert(vacancies: DataFrame, engine: sqlalchemy.engine.base.Engine):
     vacancies = (
         vacancies
         .assign(
-            key_skills=lambda df: df["key_skills"].apply(array_literal),
-            specializations=lambda df: df["specializations"].apply(array_literal),
+            **{
+                "key_skills": lambda df: df["key_skills"].apply(array_literal),
+                "specializations": lambda df: df["specializations"].apply(array_literal),
+                "salary.from": lambda df: df["salary.from"].astype(int),
+                "salary.to": lambda df: df["salary.to"].astype(int),
+            }
         )
     )
 
@@ -19,17 +23,16 @@ def insert(vacancies: DataFrame, engine: sqlalchemy.engine.base.Engine):
 
     with raw_con.cursor() as cursor:
         buffer = StringIO()
-
         vacancies.to_csv(buffer, sep='\t', header=False, index=False)
 
         buffer.seek(0)
-        cursor.copy_from(buffer, 'vacancies', null="")
+        cursor.copy_from(buffer, "vacancies", null="")
         raw_con.commit()
 
     return vacancies.shape[0]
 
 
-def update(df: DataFrame):
+def update():
     """Update old vacancies info"""
     ...
 

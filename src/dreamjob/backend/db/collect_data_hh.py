@@ -5,7 +5,7 @@ import json
 from typing import Tuple
 from pandas import DataFrame
 
-from dreamjob.config import settings
+from dreamjob.backend.config import settings
 from structlog import get_logger
 
 DISPLAY_COLS = settings.COLS
@@ -42,7 +42,7 @@ def get_pages(params: dict) -> DataFrame:
     """
     vacancies_urls = pd.DataFrame()
 
-    for page in range(20):
+    for page in range(2):
         params["page"] = page
 
         page_info, max_pages, vacancies_found = get_page(params)

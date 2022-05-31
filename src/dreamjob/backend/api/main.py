@@ -1,10 +1,10 @@
 import uvicorn
 from fastapi import HTTPException
 
-from dreamjob.db.api import add_new_vacancies
-from dreamjob.db.create_db import create_db, create_table
-from dreamjob.config.logging_setup import setup_logging
-from dreamjob.config import settings
+from dreamjob.backend.db.api import add_new_vacancies
+from dreamjob.backend.db.create_db import create_db, create_table
+from dreamjob.backend.config.logging_setup import setup_logging
+from dreamjob.backend.config import settings
 
 from typing import Union
 from fastapi import FastAPI
@@ -47,7 +47,7 @@ def add_new_vacancies_event(area: int = 2,
 
 def main():
     uvicorn.run(
-        "dreamjob.api.main:app",
+        "dreamjob.backend.api.main:app",
         host="127.0.0.1",
         port=8080,
     )

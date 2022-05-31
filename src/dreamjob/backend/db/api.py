@@ -2,10 +2,10 @@ import os
 from sqlalchemy import create_engine
 from structlog import get_logger
 
-from dreamjob.db.collect_data_hh import get_vacancies
-from dreamjob.db.preprocess_data import preprocess_data
-from dreamjob.db.data_manipulation import insert
-from dreamjob.db.create_db import DB_CONNECTION_STRING
+from dreamjob.backend.db.collect_data_hh import get_vacancies
+from dreamjob.backend.db.preprocess_data import preprocess_data
+from dreamjob.backend.db.data_manipulation import insert
+from dreamjob.backend.db.create_db import DB_CONNECTION_STRING
 
 logger = get_logger()
 
