@@ -1,8 +1,9 @@
-import os
 import sqlalchemy
 from dreamjob.backend.config import settings
 
-DB_CONNECTION_STRING = os.path.join(settings.DB_CONNECTION_STRING, "dreamjob")
+USER = settings.USER
+PASSWORD = settings.PASSWORD
+DB_CONNECTION_STRING = f"postgresql+psycopg2://{USER}:{PASSWORD}@localhost/dreamjob"
 
 
 class DBConfig:
