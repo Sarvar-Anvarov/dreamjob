@@ -22,7 +22,6 @@ def add_new_vacancies(area: int = 2,
     Periodically upgrade table with new vacancies
     Period - each day in the morning
     TODO: Add celery task
-    TODO: Call DB_CONNECTION_STRING once
     """
     try:
         logger.info("Add new vacancies",
