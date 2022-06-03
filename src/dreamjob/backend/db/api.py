@@ -16,8 +16,7 @@ router = APIRouter()
 @router.get("/add_new_vacancies")
 def add_new_vacancies(area: int = 2,
                       period: int = 1,
-                      per_page: int = 100,
-                      db_engine=None) -> Dict[str, str]:
+                      per_page: int = 100) -> Dict[str, str]:
     """
     Periodically upgrade table with new vacancies
     Period - each day in the morning
@@ -27,7 +26,7 @@ def add_new_vacancies(area: int = 2,
         logger.info("Add new vacancies",
                     area=area, period=period, per_page=per_page)
 
-        db_engine = db_engine if db_engine is not None else DBConfig.get().db_engine
+        db_engine = DBConfig.get().db_engine
 
         vacancies_raw = get_vacancies(area=area, period=period, per_page=per_page)
         vacancies = preprocess_data(vacancies_raw)
