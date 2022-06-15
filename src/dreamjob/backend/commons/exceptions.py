@@ -1,3 +1,7 @@
+class DataCollectionFailed(Exception):
+    pass
+
+
 class RecommendationException(Exception):
     pass
 

@@ -1,24 +1,25 @@
-from typing import Dict
+import time
+import schedule
+from schedule import every, repeat
 
-from fastapi import APIRouter
-from fastapi import HTTPException
+from typing import Dict
 from structlog import get_logger
 
 from dreamjob.backend.db.collect_data_hh import get_vacancies
 from dreamjob.backend.db.preprocess_data import preprocess_data
 from dreamjob.backend.db.data_manipulation import insert
 from dreamjob.backend.db.db_engine import DBConfig
+from dreamjob.backend.commons.exceptions import DataCollectionFailed
 
 logger = get_logger()
-router = APIRouter()
 
 
-@router.get("/add_new_vacancies")
+@repeat(every().day.at("00:00"))
 def add_new_vacancies(area: int = 2,
                       period: int = 1,
                       per_page: int = 100) -> Dict[str, str]:
     """
-    Periodically upgrade table with new vacancies
+    Periodically update table with new vacancies
     Period - each day in the morning
     TODO: Add celery task
     """
@@ -35,7 +36,13 @@ def add_new_vacancies(area: int = 2,
         logger.info("New vacancies were added to table",
                     number_of_new_vacs=number_of_new_vacs)
 
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        return {"status": f"{number_of_new_vacs} new vacancies were added"}
 
-    return {"status": f"{number_of_new_vacs} new vacancies were added"}
+    except DataCollectionFailed:
+        logger.info("Data collection failed")
+
+
+# Not the best way to do a periodic job
+while True:
+    schedule.run_pending()
+    time.sleep(1)

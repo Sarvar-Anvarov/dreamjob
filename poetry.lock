@@ -345,6 +345,14 @@ typing-extensions = {version = ">=4.0.0,<5.0", markers = "python_version < \"3.9
 jupyter = ["ipywidgets (>=7.5.1,<8.0.0)"]
 
 [[package]]
+name = "schedule"
+version = "1.1.0"
+description = "Job scheduling for humans."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -468,7 +476,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "e57637f3e7ba050d50f3a99746e72e3bd6b1b19d3abccf23de755d1a5166c28e"
+content-hash = "33b689b09ffd34d41e285e40ed7ddddb0afd97b82170ea175b400711cd04f52f"
 
 [metadata.files]
 anyio = [
@@ -720,6 +728,10 @@ requests = [
 rich = [
     {file = "rich-12.4.4-py3-none-any.whl", hash = "sha256:d2bbd99c320a2532ac71ff6a3164867884357da3e3301f0240090c5d2fdac7ec"},
     {file = "rich-12.4.4.tar.gz", hash = "sha256:4c586de507202505346f3e32d1363eb9ed6932f0c2f63184dea88983ff4971e2"},
+]
+schedule = [
+    {file = "schedule-1.1.0-py2.py3-none-any.whl", hash = "sha256:617adce8b4bf38c360b781297d59918fbebfb2878f1671d189f4f4af5d0567a4"},
+    {file = "schedule-1.1.0.tar.gz", hash = "sha256:e6ca13585e62c810e13a08682e0a6a8ad245372e376ba2b8679294f377dfc8e4"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
