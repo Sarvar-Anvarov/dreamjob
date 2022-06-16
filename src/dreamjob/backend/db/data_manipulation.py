@@ -1,3 +1,4 @@
+import pandas as pd
 import sqlalchemy
 from io import StringIO
 
@@ -35,6 +36,16 @@ def update():
     ...
 
 
-def select():
+def select(engine: sqlalchemy.engine.base.Engine,
+           columns: str = "*", top_n: int = 0, top_query: str = "") -> DataFrame:
     """Select vacancies"""
-    ...
+    if top_n:
+        top_query = f"LIMIT {top_n}"
+
+    return pd.read_sql_query(
+        f"""
+        SELECT {columns} FROM vacancies {top_query}
+        """,
+        con=engine
+    )
+

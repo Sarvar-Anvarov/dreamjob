@@ -5,7 +5,7 @@ import pandas as pd
 from sqlalchemy import create_engine, MetaData
 from structlog import get_logger
 from dreamjob.backend.config import settings
-from dreamjob.backend.db.db_engine import DBConfig
+from dreamjob.backend.db.engine import DBConfig
 
 USER = settings.USER
 PASSWORD = settings.PASSWORD
