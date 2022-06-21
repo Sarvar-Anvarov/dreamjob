@@ -16,7 +16,8 @@ psycopg2 = "^2.9.3"
 structlog = "^21.5.0"
 rich = {version = "^12.4.4", optional = true}
 colorama = {version = "^0.4.4", optional = true}
-schedule = "^1.1.0"
+celery = "^5.2.7"
+redis = "^4.3.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

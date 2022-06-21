@@ -230,3 +230,8 @@ notes/
 
 # dynaconf secrets
 secrets.toml
+
+# celerybeat-schedule
+*.bak
+*.dat
+*.dir

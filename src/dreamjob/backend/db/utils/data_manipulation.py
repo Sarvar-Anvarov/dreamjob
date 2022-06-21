@@ -2,7 +2,7 @@ import pandas as pd
 import sqlalchemy
 from io import StringIO
 
-from dreamjob.backend.db.preprocess_data import array_literal
+from .preprocess_data import array_literal
 from pandas import DataFrame
 
 

@@ -1,19 +1,28 @@
-import time
-import schedule
-from schedule import every, repeat
-
+from celery import Celery
+from celery.schedules import crontab
 from structlog import get_logger
 
-from dreamjob.backend.db.collect_data import get_vacancies
-from dreamjob.backend.db.preprocess_data import preprocess_data
-from dreamjob.backend.db.data_manipulation import insert, select
-from dreamjob.backend.db.engine import DBConfig
+from .utils.collect_data import get_vacancies
+from .utils.preprocess_data import preprocess_data
+from .utils.data_manipulation import insert, select
+from .utils.engine import DBConfig
 from dreamjob.backend.commons.exceptions import DataCollectionFailed
 
 logger = get_logger()
+app = Celery('tasks', broker='redis://localhost//')
 
 
-@repeat(every().day.at("00:00"))
+@app.on_after_configure.connect
+def setup_periodic_tasks(sender, **kwargs):
+    # Executes every day 19:00 UTC
+    sender.add_periodic_task(
+        crontab(hour=20, minute=3),
+        add_new_vacancies.s(),
+        name="add new vacancies",
+    )
+
+
+@app.task
 def add_new_vacancies(area: int = 2,
                       period: int = 1,
                       per_page: int = 100) -> None:
@@ -30,12 +39,15 @@ def add_new_vacancies(area: int = 2,
 
         # parse vacancies and preprocess data
         vacancies_raw = get_vacancies(area=area, period=period, per_page=per_page)
-        vacancies = preprocess_data(vacancies_raw)
+        vacancies = preprocess_data(vacancies_raw.dropna(subset=["id"]))
 
         # check if vacancy is in database already
-        ids_in_db = select(columns="id", engine=db_engine)["id"]
+        ids_in_db = select(columns="id", engine=db_engine)["id"].astype("str")
         vacancies_to_insert = vacancies.query("id not in @ids_in_db")
         vacancies_to_update = vacancies.query("id in @ids_in_db")
+
+        logger.info("Number of already existing ids",
+                    number_of_existing_ids=ids_in_db.shape[0])
 
         # insert new vacancies
         number_of_new_vacs = insert(vacancies_to_insert, db_engine)
@@ -46,10 +58,3 @@ def add_new_vacancies(area: int = 2,
 
     except DataCollectionFailed:
         logger.info("Data collection failed")
-
-
-# TODO: not working, CELERY-CELERY-CELERY
-# Not the best way to do a periodic job
-while True:
-    schedule.run_pending()
-    time.sleep(1)

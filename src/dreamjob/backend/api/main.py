@@ -1,8 +1,8 @@
 import uvicorn
 from fastapi import FastAPI
 
-from dreamjob.backend.db.create_db import create_db, create_table
-from dreamjob.backend.logging_setup import setup_logging
+from dreamjob.backend.db.utils.create_db import create_db, create_table
+from dreamjob.backend.logger import setup_logging
 from dreamjob.backend.config import settings
 
 LOG_DIR = settings.LOG_DIR
