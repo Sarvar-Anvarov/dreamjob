@@ -14,9 +14,9 @@ app = Celery('tasks', broker='redis://localhost//')
 
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    # Executes every day 19:00 UTC
+    # Executes every day at 00:00 UTC
     sender.add_periodic_task(
-        crontab(hour=20, minute=3),
+        crontab(hour=0, minute=0),
         add_new_vacancies.s(),
         name="add new vacancies",
     )
@@ -28,8 +28,7 @@ def add_new_vacancies(area: int = 2,
                       per_page: int = 100) -> None:
     """
     Periodically update table with new vacancies
-    Period - each day in the morning
-    TODO: Add celery task
+    Period - every day at 00:00 UTC
     """
     try:
         logger.info("Add new vacancies",
