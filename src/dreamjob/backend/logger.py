@@ -7,7 +7,6 @@ from structlog.threadlocal import merge_threadlocal
 
 
 def setup_logging(log_dir, log_level=logging.INFO):
-
     # avoid double logging by uvicorn
     logging.getLogger("uvicorn").removeHandler(logging.getLogger("uvicorn").handlers[0])
 
@@ -32,8 +31,7 @@ def setup_logging(log_dir, log_level=logging.INFO):
     ]
 
     structlog.configure_once(
-        processors=shared_processors
-                   + [structlog.stdlib.ProcessorFormatter.wrap_for_formatter],
+        processors=shared_processors + [structlog.stdlib.ProcessorFormatter.wrap_for_formatter],
         logger_factory=structlog.stdlib.LoggerFactory(),
         wrapper_class=structlog.stdlib.BoundLogger,
         cache_logger_on_first_use=True,
