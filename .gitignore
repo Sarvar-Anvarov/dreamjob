@@ -221,7 +221,7 @@ rhel/
 
 log/
 /data
-
+notebooks/
 notes/
 
 # pickled files and txt
