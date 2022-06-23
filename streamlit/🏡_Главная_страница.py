@@ -1,12 +1,25 @@
 import streamlit as st
 import requests
 
-# Test
+from PIL import Image
+from dreamjob.config import settings
 
-st.subheader('Greetings')
-st.markdown("I'm glad to see ya'll")
+PICTURE = settings.PICTURE
 
-if st.button("Add new vacancies"):
-    response = requests.get("http://127.0.0.1:8080/data/add_new_vacancies")
-    st.write("I've got some response")
-    st.write(response.text)
+st.set_page_config(
+    page_title="DreamJob", initial_sidebar_state="expanded"
+)
+
+st.header("DreamJob")
+st.markdown("#### Пусть работа приносит удовольствие")
+
+
+st.write(
+    """
+    Привет, мы рады тебя видеть! Наш алгоритм поможет тебе найти вакансии, соответствующие твоим навыкам и интересам. 
+    Просто расскажи о себе, своих увлечениях, способностях и получи подходящий список вакансий.
+    """
+)
+
+image = Image.open(PICTURE)
+st.image(image, caption="Good boy")
