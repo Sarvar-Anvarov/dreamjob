@@ -6,7 +6,7 @@ from .utils.collect_data import get_vacancies
 from .utils.preprocess_data import preprocess_data
 from .utils.data_manipulation import insert, select
 from .utils.engine import DBConfig
-from dreamjob.backend.commons.exceptions import DataCollectionFailed
+from dreamjob.commons.exceptions import DataCollectionFailed
 
 logger = get_logger()
 app = Celery('tasks', broker='redis://localhost//')

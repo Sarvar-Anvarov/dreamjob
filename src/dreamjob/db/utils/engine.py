@@ -1,5 +1,5 @@
 import sqlalchemy
-from dreamjob.backend.config import settings
+from dreamjob.config import settings
 
 USER = settings.USER
 PASSWORD = settings.PASSWORD

@@ -5,7 +5,7 @@ import json
 from typing import Tuple
 from pandas import DataFrame
 
-from dreamjob.backend.config import settings
+from dreamjob.config import settings
 from structlog import get_logger
 
 DISPLAY_COLS = settings.COLS

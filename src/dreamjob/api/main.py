@@ -1,9 +1,9 @@
 import uvicorn
 from fastapi import FastAPI
 
-from dreamjob.backend.db.utils.create_db import create_db, create_table
-from dreamjob.backend.logger import setup_logging
-from dreamjob.backend.config import settings
+from dreamjob.db.utils.create_db import create_db, create_table
+from dreamjob.logger import setup_logging
+from dreamjob.config import settings
 
 LOG_DIR = settings.LOG_DIR
 
@@ -24,7 +24,7 @@ def startup_events():
 
 def main():
     uvicorn.run(
-        "dreamjob.backend.api.main:app",
+        "dreamjob.api.main:app",
         host="127.0.0.1",
         port=8080,
     )

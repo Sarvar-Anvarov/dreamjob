@@ -1,4 +1,4 @@
-from dreamjob.backend import __version__
+from dreamjob import __version__
 
 
 def test_version():
