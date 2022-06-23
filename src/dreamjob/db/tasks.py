@@ -46,7 +46,7 @@ def add_new_vacancies(area: int = 2,
         vacancies_to_update = vacancies.query("id in @ids_in_db")
 
         logger.info("Number of already existing ids",
-                    number_of_existing_ids=ids_in_db.shape[0])
+                    number_of_existing_ids=vacancies_to_update.shape[0])
 
         # insert new vacancies
         number_of_new_vacs = insert(vacancies_to_insert, db_engine)

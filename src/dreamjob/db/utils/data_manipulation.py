@@ -1,6 +1,5 @@
 import pandas as pd
 import sqlalchemy
-from io import StringIO
 
 from .preprocess_data import array_literal
 from pandas import DataFrame
@@ -18,15 +17,12 @@ def insert(vacancies: DataFrame, engine: sqlalchemy.engine.base.Engine):
         )
     )
 
-    raw_con = engine.raw_connection()
-
-    with raw_con.cursor() as cursor:
-        buffer = StringIO()
-        vacancies.to_csv(buffer, sep='\t', header=False, index=False)
-
-        buffer.seek(0)
-        cursor.copy_from(buffer, "vacancies", null="")
-        raw_con.commit()
+    vacancies.to_sql(
+        name="vacancies",
+        con=engine,
+        if_exists="append",
+        index=False
+    )
 
     return vacancies.shape[0]
 

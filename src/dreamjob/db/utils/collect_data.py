@@ -42,7 +42,7 @@ def get_pages(params: dict) -> DataFrame:
     """
     vacancies_urls = pd.DataFrame()
 
-    for page in range(1):
+    for page in range(20):
         params["page"] = page
 
         page_info, max_pages, vacancies_found = get_page(params)
