@@ -1,4 +1,5 @@
 import streamlit as st
+import requests
 
 st.set_page_config(
     page_title="Поиск работы", page_icon="🎨", initial_sidebar_state="expanded"
@@ -14,7 +15,6 @@ with st.sidebar:
         city = st.multiselect("Город(а)", ["Москва", "Санкт-Петербург"], default="Москва")
         salary = st.slider("Диапазон зарплат, ₽", 0, 500000, (50000, 250000), step=5000)
         submit_button = st.form_submit_button(label="Принять")
-
 
 st.write(
     """

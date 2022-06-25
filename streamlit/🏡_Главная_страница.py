@@ -4,15 +4,13 @@ import requests
 from PIL import Image
 from dreamjob.config import settings
 
-PICTURE = settings.PICTURE
-
 st.set_page_config(
     page_title="DreamJob", initial_sidebar_state="expanded"
 )
 
+
 st.header("DreamJob")
 st.markdown("#### Пусть работа приносит удовольствие")
-
 
 st.write(
     """
@@ -21,5 +19,5 @@ st.write(
     """
 )
 
-image = Image.open(PICTURE)
+image = Image.open(settings.PICTURE)
 st.image(image, caption="Good boy")

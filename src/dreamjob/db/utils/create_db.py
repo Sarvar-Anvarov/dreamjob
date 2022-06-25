@@ -80,6 +80,6 @@ def create_table(db_engine=None):
     vacancies_df = pd.read_sql_table("vacancies", db_engine)
 
     if vacancies_df.empty:
-        logger.warning("There is no vacancies in table, add some with update_data.py")
+        logger.warning("There is no vacancies in table, add some or wait until periodic task will do it for you")
     else:
         logger.info("Number of vacancies in table", number=vacancies_df.shape[0])
