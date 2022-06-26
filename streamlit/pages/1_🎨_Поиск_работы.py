@@ -45,7 +45,7 @@ st.write(
 text = st.text_area("Только не скромничай!", value="Умею собирать кубик Рубика! Возьмите меня на работу...")
 response = requests.post("http://127.0.0.1:8080/recommend", json={"user_input": text}).json()
 
-# Prepare recommendatiions from response
+# Prepare recommendations from response
 vacancies = load_data()
 recommendations = prepare_recs(vacancies)
 
