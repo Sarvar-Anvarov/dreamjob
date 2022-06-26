@@ -19,6 +19,7 @@ colorama = {version = "^0.4.4", optional = true}
 celery = "^5.2.7"
 redis = "^4.3.3"
 sklearn = "^0.0"
+httpie = "^3.2.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

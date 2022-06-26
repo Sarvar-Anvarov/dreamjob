@@ -1,20 +1,11 @@
-import pickle
 from structlog import get_logger
-
-from dreamjob.config import settings
-from dreamjob.ml.models.tf_idf import TFIDFModel
+from dreamjob.ml.models.base import BaseModel
 
 logger = get_logger()
 
 
-def choose_vacancies(user_input):
-    model = pickle.load(open(settings.TF_IDF.model, "rb"))
-    matrix = pickle.load(open(settings.TF_IDF.matrix, "rb"))
-
-    recommender = TFIDFModel(model)
-    idx = recommender.predict(user_input.lower(), matrix)
-
-    # logger.info("User input", user_input=user_input)
-    print(user_input, idx)
+def choose_vacancies(user_input, recommender: BaseModel):
+    recommender.load_artifacts()
+    idx = recommender.predict(user_input.lower())
 
     return idx

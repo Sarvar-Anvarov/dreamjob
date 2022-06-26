@@ -3,6 +3,8 @@ from fastapi import FastAPI
 
 from dreamjob.db.utils.create_db import create_db, create_table
 from dreamjob.ml.recommend import choose_vacancies
+from dreamjob.ml.models.tf_idf import TFIDFModel
+from dreamjob.commons.data_models import Recommendations, RecommendationRequest
 from dreamjob.logger import setup_logging
 from dreamjob.config import settings
 
@@ -23,10 +25,12 @@ def startup_events():
     create_table()
 
 
-# TODO: fix here with basemodel
-@app.get("/recommend/{request}")
-def recommend(request: str):
-    vacancies = choose_vacancies(request)
+@app.post("/recommend", response_model=Recommendations)
+def recommend(request: RecommendationRequest):
+    vacancies = choose_vacancies(
+        user_input=request.user_input,
+        recommender=TFIDFModel()
+    )
     return vacancies
 
 
