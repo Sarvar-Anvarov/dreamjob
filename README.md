@@ -8,7 +8,7 @@ Tech: python, celery, redis, FastAPI, SQL, streamlit.
 
 ## Схема проекта
 
-![alt text](streamlit/pictures/schema.png)
+![alt text](streamlit/pictures/schema.drawio.png)
 
 ### Работа с данными
 
