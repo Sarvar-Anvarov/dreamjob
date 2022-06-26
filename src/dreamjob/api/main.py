@@ -9,7 +9,6 @@ from dreamjob.logger import setup_logging
 from dreamjob.config import settings
 
 LOG_DIR = settings.LOG_DIR
-
 app = FastAPI()
 
 
